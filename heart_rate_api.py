@@ -28,7 +28,7 @@ def post_heart_rate():
 
 def is_subject_in_db(email):
     try:
-        models.User.objects.raw({"_id": email}).first()
+        models.User.objects.raw({'_id': email}).first()
         user_exists = True
     except errors.DoesNotExist:
         user_exists = False
@@ -72,7 +72,7 @@ def get_int_average():
         tachy_flag = is_tachycardic(wanted_user.age, mean_heart_rate)
 
         return jsonify({'avg_heart_rate_since_date': mean_heart_rate,
-                        'tachycardic': tachy_flag})
+                        'tachycardic': str(tachy_flag)})
     else:
         return jsonify({'error': 'User not in database'})
 
@@ -94,4 +94,4 @@ def is_tachycardic(age, u_heart_rate):
 
     tachy_keys = array(list(tachy_dict.keys()))
     tachy_cutoff = tachy_dict[tachy_keys[tachy_keys < age][-1]]
-    return str(u_heart_rate > tachy_cutoff)
+    return u_heart_rate > tachy_cutoff

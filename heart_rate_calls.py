@@ -15,25 +15,36 @@ def main():
     r2 = requests.post('http://vcm-3602.vm.duke.edu:5000/api/heart_rate',
                        json={'user_email': 'suyash@suyashkumar.com',
                              'user_age': 24,
-                             'heart_rate': 50})
+                             'heart_rate': 85})
     print(r2.text)
 
-    r3 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/<iamemail@email.com>')
+    r3 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/iamemail@email.com')
     print(r3.text)
 
-    r4 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/<iamemail2@email.com>')
+    r4 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/iamemail2@email.com')
     print(r4.text)
 
-    r5 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/average/<suyash@suyashkumar.com>')
+    r5 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/average/suyash@suyashkumar.com')
     print(r5.text)
 
-    r6 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/average/<iamemail@email.com>')
+    r6 = requests.get('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/average/iamemail@email.com')
     print(r6.text)
 
     r7 = requests.post('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/interval_average',
                        json={'user_email': 'suyash@suyashkumar.com',
                              'heart_rate_average_since': cutoff_time_str})
     print(r7.text)
+
+    r8 = requests.post('http://vcm-3602.vm.duke.edu:5000/api/heart_rate',
+                       json={'user_email': 'suyash@suyashkumar.com',
+                             'user_age': 24,
+                             'heart_rate': 210})
+    print(r8.text)
+
+    r9 = requests.post('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/interval_average',
+                       json={'user_email': 'suyash@suyashkumar.com',
+                             'heart_rate_average_since': cutoff_time_str})
+    print(r9.text)
 
 if __name__ == '__main__':
     main()
