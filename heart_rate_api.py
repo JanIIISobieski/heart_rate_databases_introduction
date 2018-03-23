@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from pymodm import errors
 import models
 import datetime
 import main
@@ -30,7 +31,7 @@ def is_subject_in_db(json_file):
     try:
         models.User.objects.raw({"_id": json_file['user_email']}).first()
         user_exists = True
-    except models.DoesNotExist:
+    except errors.DoesNotExist:
         user_exists = False
     return user_exists
 
