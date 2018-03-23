@@ -11,7 +11,7 @@ app = Flask(__name__)
 def post_heart_rate():
     r = request.get_json()
     print(r)
-    if is_subject_in_db(r):  # if subject already exists
+    if is_subject_in_db(r['user_email']):  # if subject already exists
         main.add_heart_rate(r['user_email'],
                             r['heart_rate'],
                             datetime.datetime.now())
@@ -27,9 +27,9 @@ def post_heart_rate():
     return jsonify({'info': text})
 
 
-def is_subject_in_db(json_file):
+def is_subject_in_db(email):
     try:
-        models.User.objects.raw({"_id": json_file['user_email']}).first()
+        models.User.objects.raw({"_id": email}).first()
         user_exists = True
     except errors.DoesNotExist:
         user_exists = False
