@@ -81,11 +81,11 @@ def get_int_average():
 def is_tachycardic(age, mean_heart_rate):
     from numpy import array
     tachy_dict = {0: 159,
-                  3/365: 166,
-                  7/365: 182,
-                  30/365: 179,
-                  90/365: 186,
-                  180/365: 169,
+                  0.008: 166,
+                  0.019: 182,
+                  0.082: 179,
+                  0.25: 186,
+                  0.5: 169,
                   1: 151,
                   3: 137,
                   5: 133,
