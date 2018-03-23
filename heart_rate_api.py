@@ -23,7 +23,7 @@ def post_heart_rate():
                          r['heart_rate'],
                          datetime.datetime.now())
         text = 'New user created'
-    return jsonify({'info': text})
+    return jsonify({'info': text}), 201
 
 
 def is_subject_in_db(email):
@@ -39,9 +39,9 @@ def is_subject_in_db(email):
 def get_user_heart_rates(user_email):
     if is_subject_in_db(user_email):
         wanted_user = models.User.objects.raw({'_id': user_email}).first()
-        return jsonify({'heart_rate': wanted_user.heart_rate})
+        return jsonify({'heart_rate': wanted_user.heart_rate}), 200
     else:
-        return jsonify({'error': 'User not in database'})
+        return jsonify({'error': 'User not in database'}), 404
 
 
 @app.route('/api/heart_rate/average/<user_email>', methods=['GET'])
@@ -49,9 +49,9 @@ def get_avg_heart_rates(user_email):
     from numpy import mean
     if is_subject_in_db(user_email):
         wanted_user = models.User.objects.raw({'_id': user_email}).first()
-        return jsonify({'avg_heart_rate': mean(wanted_user.heart_rate)})
+        return jsonify({'avg_heart_rate': mean(wanted_user.heart_rate)}), 200
     else:
-        return jsonify({'error': 'User not in database'})
+        return jsonify({'error': 'User not in database'}), 404
 
 
 @app.route('/api/heart_rate/interval_average', methods=['POST'])
@@ -72,9 +72,9 @@ def get_int_average():
         tachy_flag = is_tachycardic(wanted_user.age, mean_heart_rate)
 
         return jsonify({'avg_heart_rate_since_date': mean_heart_rate,
-                        'tachycardic': str(tachy_flag[0])})
+                        'tachycardic': str(tachy_flag[0])}), 200
     else:
-        return jsonify({'error': 'User not in database'})
+        return jsonify({'error': 'User not in database'}), 404
 
 
 def is_tachycardic(age, mean_heart_rate):
