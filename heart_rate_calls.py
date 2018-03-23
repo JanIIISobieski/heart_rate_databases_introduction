@@ -38,7 +38,7 @@ def main():
     r8 = requests.post('http://vcm-3602.vm.duke.edu:5000/api/heart_rate',
                        json={'user_email': 'suyash@suyashkumar.com',
                              'user_age': 24,
-                             'heart_rate': 300})
+                             'heart_rate': 210})
     print(r8.text)
 
     r9 = requests.post('http://vcm-3602.vm.duke.edu:5000/api/heart_rate/interval_average',

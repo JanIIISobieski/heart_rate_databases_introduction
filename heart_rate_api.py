@@ -69,10 +69,11 @@ def get_int_average():
         heart_rates = array(wanted_user.heart_rate)
         mean_heart_rate = mean(heart_rates[heart_times > cutoff_date])
 
-        tachy_flag = is_tachycardic(wanted_user.user_age, mean_heart_rate)
+        tachy_flag = is_tachycardic(wanted_user.age, mean_heart_rate)
 
         return jsonify({'avg_heart_rate_since_date': mean_heart_rate,
-                        'tachycardic': str(tachy_flag)})
+                        'tachycardic': str(tachy_flag[0]),
+                        'tachy_cutoff': tachy_flag[1]})
     else:
         return jsonify({'error': 'User not in database'})
 
@@ -94,4 +95,4 @@ def is_tachycardic(age, mean_heart_rate):
 
     tachy_keys = array(list(tachy_dict.keys()))
     tachy_cutoff = tachy_dict[tachy_keys[tachy_keys < age][-1]]
-    return mean_heart_rate > tachy_cutoff
+    return (mean_heart_rate > tachy_cutoff, tachy_cutoff)
