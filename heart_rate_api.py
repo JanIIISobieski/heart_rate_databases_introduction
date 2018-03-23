@@ -96,4 +96,4 @@ def is_tachycardic(age, u_heart_rate):
 
     tachy_keys = array(list(tachy_dict.keys()))
     tachy_cutoff = tachy_dict[tachy_keys[tachy_keys < age][-1]]
-    return u_heart_rate > tachy_cutoff
+    return str(u_heart_rate > tachy_cutoff)
