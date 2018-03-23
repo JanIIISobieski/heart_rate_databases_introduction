@@ -16,15 +16,13 @@ def post_heart_rate():
         main.add_heart_rate(r['user_email'],
                             r['heart_rate'],
                             datetime.datetime.now())
-        text = ''.join('Added heart rate of ', str(r['heart_rate']),
-                       ' to ', r['user_email'])
+        text = 'Heart rate added'
     else:
         main.create_user(r['user_email'],
                          r['user_age'],
                          r['heart_rate'],
                          datetime.datetime.now())
-        text = ''.join('Created user ', r['user_email'],
-                       ' and initialized with HR ', str(r['heart_rate']))
+        text = 'New user created'
     return jsonify({'info': text})
 
 
