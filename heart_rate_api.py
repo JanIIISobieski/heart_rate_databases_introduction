@@ -10,6 +10,9 @@ connect("mongodb://vcm-3602.vm.duke.edu:27017/heart_rate_app")
 
 @app.route('/api/heart_rate', methods=['POST'])
 def post_heart_rate():
+    '''Sends request to add a new user to the database. If user exists, then the
+    heart rate is added to the existing user.
+    '''
     r = request.get_json()
     print(r)
     if is_subject_in_db(r['user_email']):  # if subject already exists
@@ -27,6 +30,7 @@ def post_heart_rate():
 
 
 def is_subject_in_db(email):
+    '''Checks whether user exists in database'''
     try:
         models.User.objects.raw({'_id': email}).first()
         user_exists = True
@@ -37,6 +41,7 @@ def is_subject_in_db(email):
 
 @app.route('/api/heart_rate/<user_email>', methods=['GET'])
 def get_user_heart_rates(user_email):
+    '''Return list of heart rates for a given user'''
     if is_subject_in_db(user_email):
         wanted_user = models.User.objects.raw({'_id': user_email}).first()
         return jsonify({'heart_rate': wanted_user.heart_rate})
@@ -46,6 +51,7 @@ def get_user_heart_rates(user_email):
 
 @app.route('/api/heart_rate/average/<user_email>', methods=['GET'])
 def get_avg_heart_rates(user_email):
+    '''Return mean of all heart rates for a given user'''
     from numpy import mean
     if is_subject_in_db(user_email):
         wanted_user = models.User.objects.raw({'_id': user_email}).first()
@@ -56,6 +62,9 @@ def get_avg_heart_rates(user_email):
 
 @app.route('/api/heart_rate/interval_average', methods=['POST'])
 def get_int_average():
+    '''Finds mean of heart rates since a user specified date. Additionally
+    returns a flag whether the mean heart rate would indicate tachycardia, as
+    long as the queried subject is more than 1 year old.'''
     from numpy import array, mean
     r = request.get_json()
     print(r)
@@ -78,6 +87,14 @@ def get_int_average():
 
 
 def is_tachycardic(age, mean_heart_rate):
+    '''Function to determine whether mean heart rate indicates tachycardia
+    or not
+
+    :param age (int): age of individual in years
+    :param mean_heart_rate (int): mean heart rate over the user specified
+    duration
+
+    '''
     from numpy import array
     tachy_dict = {1: 151,
                   3: 137,
