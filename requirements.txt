@@ -1,4 +1,5 @@
 pymodm
 flask
+flask-cors
 numpy
 gunicorn
