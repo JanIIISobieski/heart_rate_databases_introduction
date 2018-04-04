@@ -47,7 +47,8 @@ def get_user_heart_rates(user_email):
     '''Return list of heart rates for a given user'''
     if is_subject_in_db(user_email):
         wanted_user = models.User.objects.raw({'_id': user_email}).first()
-        return jsonify({'heart_rate': wanted_user.heart_rate})
+        return jsonify({'heart_rate': wanted_user.heart_rate,
+                        'heart_rate_times': wanted_user.heart_rate_times})
     else:
         return jsonify({'error': 'User not in database'})
 
