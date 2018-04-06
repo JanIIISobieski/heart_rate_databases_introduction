@@ -6,7 +6,7 @@ import datetime
 import main
 
 app = Flask(__name__)
-#CORS(app)
+CORS(app)
 
 connect("mongodb://vcm-3602.vm.duke.edu:27017/heart_rate_app")
 
